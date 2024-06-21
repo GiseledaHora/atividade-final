@@ -1,0 +1,35 @@
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #f2f2f2;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+.tipo-sanguineo {
+    margin-bottom: 10px;
+}
+.tipo-sanguineo button {
+    margin-right: 10px;
+    margin-bottom: 5px;
+    padding: 8px 12px;
+    cursor: pointer;
+    background-color: #a20e7d;
+    color: white;
+    border: none;
+    border-radius: 4px;
+}
+.tipo-sanguineo button:hover {
+    background-color: #a81c8e;
+}
+#resultado {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #e9f5db;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doação de Sangue</title>
+    <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+        <h1>Compatibilidade Sanguíneas</h1>
+        <button onclick="doar()">Doação</button><br>
+        <br><button onclick="verificarCompatibilidade()">Verificar Compatibilidade de Recebimento</button><br>
+        <div class="tipo-sanguineo" id="tipoPai">
+           <br><span>Tipo Sanguíneo do Pai:</span><br>
+            <button onclick="selecionarTipo('O-')">O-</button>
+            <button onclick="selecionarTipo('O+')">O+</button>
+            <button onclick="selecionarTipo('A-')">A-</button>
+            <button onclick="selecionarTipo('A+')">A+</button>
+            <button onclick="selecionarTipo('B-')">B-</button>
+            <button onclick="selecionarTipo('B+')">B+</button>
+            <button onclick="selecionarTipo('AB-')">AB-</button>
+            <button onclick="selecionarTipo('AB+')">AB+</button>
+        </div><br>
+
+
+        <div class="tipo-sanguineo" id="tipoMae">
+           <br><span>Tipo Sanguíneo da Mãe:</span><br>
+            <button onclick="selecionarTipo('O-')">O-</button>
+            <button onclick="selecionarTipo('O+')">O+</button>
+            <button onclick="selecionarTipo('A-')">A-</button>
+            <button onclick="selecionarTipo('A+')">A+</button>
+            <button onclick="selecionarTipo('B-')">B-</button>
+            <button onclick="selecionarTipo('B+')">B+</button>
+            <button onclick="selecionarTipo('AB-')">AB-</button>
+            <button onclick="selecionarTipo('AB+')">AB+</button>
+        </div><br>
+      <button onclick="calcularTipoFilho()">Calcular Tipo Sanguíneo do Filho</button><br><br>
+
+    <div id="final"></div>
+    <p id="resultado"></p>
+
+    <script>
+     
+       const tipos = [];
+       let tipoPai = '';
+       let tipoMae = '';
+   
+        function doar() {
+            let doacao = prompt("Digite seu tipo Sanguíneo");
+
+            if (doacao) {
+                tipos.push(doacao);
+
+                let mensagem;
+
+              
+                switch (doacao) {
+                    case "A+":
+                        mensagem = "Você pode doar para: A+ e AB+<br>";
+                        mensagem += "Você pode receber de: A-, A+, O+, O-";
+                        break;
+                    case "A-":
+                        mensagem = "Você pode doar para: A+, A-, AB+ AB-<br>";
+                        mensagem += "Você pode receber de:  O-, A-";
+                        break;
+                    case "B+":
+                        mensagem = "Você pode doar para: B+ e AB+<br>";
+                        mensagem += "Você pode receber de: B-, B+, O+, O-";
+                        break;
+                    case "B-":
+                        mensagem = "Você pode doar para:  B+, B-, AB+ e AB-<br>";
+                        mensagem += "Você pode receber de: B-, O-";
+                        break;
+                    case "AB+":
+                        mensagem = "Você pode doar para: AB+<br>";
+                        mensagem += "Você pode receber de todos o tipos sanguíneos";
+                        break;
+                    case "AB-":
+                        mensagem = "Você pode doar para: AB+ e AB-<br>";
+                        mensagem += "Você pode receber de: A-, B-, O-, AB-";
+                        break;
+                    case "O+":
+                        mensagem = "Você pode doar para: A+, AB+, B+, O+<br>";
+                        mensagem += "Você pode receber de: O+, O-";
+                        break;
+                    case "O-":
+                        mensagem = "Você pode doar de todos o tipos sanguíneos<br>";
+                        mensagem += "Você pode receber de: O-";
+                        break;
+                    default:
+                        mensagem = "Tipo sanguíneo não reconhecido. Por favor, digite um tipo sanguíneo válido.";
+                }
+
+        
+                document.getElementById("final").innerHTML = mensagem;
+            }
+        }
+
+ 
+        function verificarCompatibilidade() {
+          
+            if (tipos.length === 0) {
+                alert("Não há tipos sanguíneos registrados ainda. Inicie o processo de doação primeiro.");
+                return;
+            }
+
+            
+            let tipoUsuario = prompt("Digite seu tipo Sanguíneo para verificar compatibilidade de recebimento");
+
+          
+            let compativel = false;
+            for (let i = 0; i < tipos.length; i++) {
+                if (tipos[i] === tipoUsuario) {
+                    compativel = true;
+                    break;
+                }
+            }
+
+          
+        }
+
+   
+        
+        function selecionarTipo(tipoSelecionado) {
+            if (document.getElementById('resultado').textContent) {
+                document.getElementById('resultado').textContent = '';
+            }
+            if (!tipoPai) {
+                tipoPai = tipoSelecionado;
+                document.getElementById('tipoPai').style.display = 'none';
+                document.getElementById('tipoMae').style.display = 'block';
+            } else {
+                tipoMae = tipoSelecionado;
+                document.getElementById('tipoMae').style.display = 'none';
+                calcularTipoFilho();
+            }
+        }
+
+
+
+        function calcularTipoFilho() {
+            let resultado = '';
+
+            if (tipoPai === '' || tipoMae === '') {
+                resultado = 'Selecione o tipo sanguíneo do pai e da mãe.';
+            } else {
+               
+                if (tipoPai === 'O-' && tipoMae === 'O-') {
+                    resultado = 'Filho pode ser apenas do tipo O-';
+
+                } else if ((opcao1 === 'O-' && opcao2 === 'O+')) {
+                    resultado = 'Filho pode ser dos tipos O+ ou O-';
+
+                } else if ((tipoPai === 'O-' && tipoMae === 'AB-') ) {
+                    resultado = 'Filho pode ser dos tipos A- ou B-';
+
+
+                } else if ((tipoPai === 'O-' && tipoMae === 'AB+')) {
+                    resultado = 'Filho pode ser dos tipos A+, B+, A- ou B-';
+
+
+                } else if ((tipoPai === 'O-' && tipoMae === 'B-')) {
+                    resultado = 'Filho pode ser dos tipos O- ou B-';
+
+                    
+                } else if ((tipoPai === 'O-' && tipoMae === 'B+')) {
+                    resultado = 'Filho pode ser dos tipos  B+, O+ B- ou O-';
+
+
+                } else if ((tipoPai === 'O-' && tipoMae === 'A-')) {
+                    resultado = 'Filho pode ser dos tipos O- ou A-';
+
+
+                } else if ((tipoPai === 'O-' && tipoMae === 'A+')) {
+                    resultado = 'Filho pode ser dos tipos A+, O-, A- ou O-';
+
+
+                } else if ((tipoPai === 'O+' && tipoMae === 'O+')) {
+                    resultado = 'Filho pode ser dos tipos O- ou O-';
+
+
+                } else if ((tipoPai === 'O+' && tipoMae === 'AB-')) {
+                    resultado = 'Filho pode ser dos tipos A+, B+, A- ou B-';
+
+
+                } else if ((tipoPai === 'O+' && tipoMae === 'AB+') ) {
+                    resultado = 'Filho pode ser dos tipos A+, B+, A- ou B-';
+
+                } else if ((tipoPai === 'O+' && tipoMae === 'B-')) {
+                    resultado = 'Filho pode ser dos tipos B+, O+, B- ou O-';
+
+
+
+                } else if ((tipoPai === 'B-' && tipoMae === 'B+')) {
+                    resultado = 'Filho pode ser dos tipos A-, B- ou AB-';
+
+
+                } else if ((tipoPai === 'A-' && tipoMae === 'A-')){
+                    resultado = 'Filho pode ser dos tipos O- ou A-';
+
+
+                } else if ((tipoPai === 'A-' && tipoMae === 'B-')) {
+                    resultado = 'Filho pode ser de qualquer grupo sanguíneo (O-, A-, B-,  AB-)';
+
+
+                } else if ((tipoPai === 'A-' && tipoMae === 'AB-')) {
+                    resultado = 'Filho pode ser dos tipos A-, B-, AB-';
+
+                } else if ((tipoPai === 'A-' && tipoMae === 'AB-')) {
+                    resultado = 'Filho pode ser dos tipos A-, B-, AB-';
+
+                } else if ((tipoPai === 'A+' && tipoMae === 'A+')){
+                    resultado = 'Filho pode ser dos tipos O- ou B-';
+
+
+                } else if (tipoPai === 'B-' && tipoMae === 'B-') {
+                    resultado = 'Filho pode ser dos tipos O- ou B-';
+
+
+                } else if ((tipoPai === 'B-' && tipoMae === 'AB-') ) {
+                    resultado = 'Filho pode ser dos tipos A-, B- ou AB-';
+
+
+                } else if (tipoPai === 'AB-' && tipoMae === 'AB-') {
+                    resultado = 'Filho pode ser dos tipos A-, B- ou AB-';
+
+
+
+
+                } else {
+                    resultado = 'Combinação inválida de tipos sanguíneos';
+                }
+            }
+
+            document.getElementById('resultado').textContent = resultado;
+
+           
+            tipoPai = '';
+            tipoMae = '';
+            document.getElementById('tipoPai').style.display = 'block';
+            document.getElementById('tipoMae').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
+
+
+
+
